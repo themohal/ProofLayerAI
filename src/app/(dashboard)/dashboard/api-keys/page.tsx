@@ -38,6 +38,12 @@ export default function ApiKeysPage() {
   };
 
   const createKey = async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      addToast({ title: "Not authenticated", variant: "destructive" });
+      return;
+    }
+
     // Generate key client-side, hash it, store only the hash
     const key = `pl_live_${crypto.randomUUID().replace(/-/g, "")}`;
     const keyPrefix = key.slice(0, 12);
@@ -50,6 +56,7 @@ export default function ApiKeysPage() {
     const keyHash = hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
 
     const { error } = await supabase.from("api_keys").insert({
+      user_id: user.id,
       key_hash: keyHash,
       key_prefix: keyPrefix,
       label: newKeyLabel,
