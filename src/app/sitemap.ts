@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
-import { APP_URL } from "@/lib/constants";
+
+const APP_URL = "https://proof-layer-ai.vercel.app";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const routes = [
@@ -9,6 +10,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/donate",
     "/docs",
     "/blog",
+    "/terms",
+    "/privacy",
     "/login",
     "/signup",
   ];

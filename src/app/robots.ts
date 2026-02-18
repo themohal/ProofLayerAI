@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
-import { APP_URL } from "@/lib/constants";
+
+const APP_URL = "https://proof-layer-ai.vercel.app";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -7,7 +8,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/dashboard/", "/api/"],
+        disallow: ["/dashboard/", "/api/", "/admin/"],
       },
     ],
     sitemap: `${APP_URL}/sitemap.xml`,

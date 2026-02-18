@@ -1,6 +1,6 @@
 export const APP_NAME = "ProofLayer AI";
 export const APP_DESCRIPTION = "The SSL Certificate of the AI Age — Universal AI Trust API";
-export const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+export const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "https://proof-layer-ai.vercel.app";
 
 export type PlanType = "starter" | "pro" | "growth" | "enterprise";
 

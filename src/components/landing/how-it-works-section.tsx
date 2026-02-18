@@ -1,27 +1,21 @@
 import { Upload, Cpu, CheckCircle } from "lucide-react";
+import { createClient } from "@/lib/supabase/server";
 
-const steps = [
-  {
-    icon: Upload,
-    step: "01",
-    title: "Upload Content",
-    description: "Upload an image, audio file, video, or paste text. We support all major formats.",
-  },
-  {
-    icon: Cpu,
-    step: "02",
-    title: "AI Analysis",
-    description: "Our multi-model pipeline analyzes content using advanced AI detection algorithms.",
-  },
-  {
-    icon: CheckCircle,
-    step: "03",
-    title: "Get Trust Score",
-    description: "Receive a detailed trust score with model fingerprinting and manipulation detection.",
-  },
-];
+const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+  Upload, Cpu, CheckCircle,
+};
 
-export function HowItWorksSection() {
+export async function HowItWorksSection() {
+  const supabase = await createClient();
+  const { data: items } = await supabase
+    .from("site_content")
+    .select("*")
+    .eq("section", "how_it_works")
+    .eq("is_active", true)
+    .order("sort_order");
+
+  if (!items || items.length === 0) return null;
+
   return (
     <section className="py-20">
       <div className="container mx-auto px-4">
@@ -34,19 +28,22 @@ export function HowItWorksSection() {
           </p>
         </div>
         <div className="grid gap-8 md:grid-cols-3">
-          {steps.map((step, i) => (
-            <div key={step.step} className="relative text-center">
-              {i < steps.length - 1 && (
-                <div className="absolute left-1/2 top-8 hidden h-0.5 w-full bg-border md:block" />
-              )}
-              <div className="relative mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-brand text-brand-foreground">
-                <step.icon className="h-7 w-7" />
+          {items.map((item, i) => {
+            const Icon = iconMap[item.data.icon] || Cpu;
+            return (
+              <div key={item.id} className="relative text-center">
+                {i < items.length - 1 && (
+                  <div className="absolute left-1/2 top-8 hidden h-0.5 w-full bg-border md:block" />
+                )}
+                <div className="relative mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-brand text-brand-foreground">
+                  <Icon className="h-7 w-7" />
+                </div>
+                <p className="mt-4 text-sm font-semibold text-brand">{item.data.step}</p>
+                <h3 className="mt-2 text-xl font-semibold">{item.data.title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">{item.data.description}</p>
               </div>
-              <p className="mt-4 text-sm font-semibold text-brand">{step.step}</p>
-              <h3 className="mt-2 text-xl font-semibold">{step.title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">{step.description}</p>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

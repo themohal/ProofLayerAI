@@ -1,28 +1,39 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Newspaper, Globe, Server, Building } from "lucide-react";
+import { createClient } from "@/lib/supabase/server";
 
-const impacts = [
-  { icon: Globe, amount: "$5", impact: "1,000 free verifications" },
-  { icon: Newspaper, amount: "$25", impact: "1 week API for a journalist" },
-  { icon: Server, amount: "$100", impact: "1 month server costs" },
-  { icon: Building, amount: "$500", impact: "Sponsor a newsroom" },
-];
+const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+  Globe, Newspaper, Server, Building,
+};
 
-export function ImpactStats() {
+export async function ImpactStats() {
+  const supabase = await createClient();
+  const { data: items } = await supabase
+    .from("site_content")
+    .select("*")
+    .eq("section", "donation_impact")
+    .eq("is_active", true)
+    .order("sort_order");
+
+  if (!items || items.length === 0) return null;
+
   return (
     <section className="py-16">
       <div className="container mx-auto px-4">
         <h2 className="text-2xl font-bold text-center mb-8">Your Impact</h2>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 max-w-4xl mx-auto">
-          {impacts.map((item) => (
-            <Card key={item.amount} className="text-center">
-              <CardContent className="pt-6">
-                <item.icon className="mx-auto h-8 w-8 text-brand mb-3" />
-                <p className="text-2xl font-bold text-brand">{item.amount}</p>
-                <p className="text-sm text-muted-foreground mt-1">{item.impact}</p>
-              </CardContent>
-            </Card>
-          ))}
+          {items.map((item) => {
+            const Icon = iconMap[item.data.icon] || Globe;
+            return (
+              <Card key={item.id} className="text-center">
+                <CardContent className="pt-6">
+                  <Icon className="mx-auto h-8 w-8 text-brand mb-3" />
+                  <p className="text-2xl font-bold text-brand">{item.data.amount}</p>
+                  <p className="text-sm text-muted-foreground mt-1">{item.data.impact}</p>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       </div>
     </section>

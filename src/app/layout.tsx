@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     template: `%s | ${APP_NAME}`,
   },
   description: APP_DESCRIPTION,
+  metadataBase: new URL("https://proof-layer-ai.vercel.app"),
   keywords: [
     "AI detection",
     "AI verification",
@@ -24,6 +25,9 @@ export const metadata: Metadata = {
     "BYOK",
     "model fingerprinting",
   ],
+  verification: {
+    google: "eDw2fWEXVf7ksLhgsc25Dxh4O_h3lT81o7SH6rKQGpQ",
+  },
 };
 
 export default function RootLayout({

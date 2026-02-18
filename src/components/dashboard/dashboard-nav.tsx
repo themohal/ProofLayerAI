@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/shared/logo";
-import { LayoutDashboard, ScanLine, Key, ServerCog, BarChart3, Settings } from "lucide-react";
+import { LayoutDashboard, ScanLine, Key, ServerCog, BarChart3, Settings, FileText } from "lucide-react";
 
 const navItems = [
   { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
@@ -12,6 +12,7 @@ const navItems = [
   { href: "/dashboard/api-keys", label: "API Keys", icon: Key },
   { href: "/dashboard/providers", label: "BYOK Providers", icon: ServerCog },
   { href: "/dashboard/usage", label: "Usage", icon: BarChart3 },
+  { href: "/dashboard/blog", label: "Blog", icon: FileText },
   { href: "/dashboard/settings", label: "Settings", icon: Settings },
 ];
 
