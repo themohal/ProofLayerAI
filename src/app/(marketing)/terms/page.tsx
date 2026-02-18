@@ -170,10 +170,11 @@ export default function TermsPage() {
 
         <section>
           <h2 className="text-xl font-semibold text-foreground mb-3">17. Donations</h2>
-          <p>Donations made through the Service are voluntary contributions to support the development and maintenance of ProofLayer AI. Donations:</p>
+          <p>Donations made through the Service are voluntary contributions used exclusively to maintain and operate ProofLayer AI, including server infrastructure costs, third-party API costs, and ongoing platform maintenance. Donations:</p>
           <ul className="list-disc list-inside mt-2 space-y-1">
             <li>Are processed by Paddle as the Merchant of Record</li>
-            <li>Are non-refundable unless required by applicable law</li>
+            <li>Are subject to Paddle&apos;s standard refund policy</li>
+            <li>Are used solely to cover operational and infrastructure costs of the Service</li>
             <li>Do not grant access to paid features or additional Service capabilities</li>
             <li>May be displayed on our public donor wall (display name only) unless you opt out</li>
           </ul>
